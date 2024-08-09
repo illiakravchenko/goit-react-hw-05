@@ -6,6 +6,10 @@ const MoviesPage = lazy(() => import("../pages/MoviesPage/MoviesPage"));
 const MoviesDetailsPage = lazy(() =>
   import("../pages/MoviesDetailsPage/MoviesDetailsPage")
 );
+const MovieCast = lazy(() => import("../components/MovieCast/MovieCast"));
+const MovieReviews = lazy(() =>
+  import("../components/MovieReviews/MovieReviews")
+);
 
 function App() {
   return (
@@ -15,10 +19,10 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />
-          <Route
-            path="/movies/:movieId"
-            element={<MoviesDetailsPage />}
-          ></Route>
+          <Route path="/movies/:movieId" element={<MoviesDetailsPage />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Route>
         </Routes>
       </Suspense>
     </>
