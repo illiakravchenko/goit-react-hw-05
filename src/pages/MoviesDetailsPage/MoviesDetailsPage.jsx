@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { getMoviesDetails } from "../../api/api";
 
 const MoviesDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
+  const previousLocation = location.state;
+
   useEffect(() => {
     async function getData() {
       try {
@@ -17,8 +26,14 @@ const MoviesDetailsPage = () => {
     }
     getData();
   }, [movieId]);
+
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
+      <Link to={previousLocation}>Go back</Link>
       {movie && (
         <>
           <div>
