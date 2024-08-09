@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Link,
   NavLink,
@@ -12,7 +12,7 @@ const MoviesDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
-  const previousLocation = location.state;
+  const goBackRef = useRef(location?.state ?? "/movies");
 
   useEffect(() => {
     async function getData() {
@@ -33,7 +33,7 @@ const MoviesDetailsPage = () => {
 
   return (
     <div>
-      <Link to={previousLocation}>Go back</Link>
+      <Link to={goBackRef.current}>Go back</Link>
       {movie && (
         <>
           <div>
