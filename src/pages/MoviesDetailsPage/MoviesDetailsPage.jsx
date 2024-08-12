@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Link,
   NavLink,
@@ -12,7 +12,7 @@ const MoviesDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
-  const goBackRef = useRef(location?.state ?? "/movies");
+  const goBackRef = location.state?.from ?? "/movies";
 
   useEffect(() => {
     async function getData() {
@@ -33,11 +33,14 @@ const MoviesDetailsPage = () => {
 
   return (
     <div>
-      <Link to={goBackRef.current}>Go back</Link>
+      <Link to={goBackRef}>Go back</Link>
       {movie && (
         <>
           <div>
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+            />
           </div>
           <div>
             <h1>{movie.title}</h1>
@@ -47,13 +50,16 @@ const MoviesDetailsPage = () => {
           </div>
         </>
       )}
-
       <ul>
         <li>
-          <NavLink to="cast">Cast</NavLink>
+          <NavLink to="cast" state={{ from: goBackRef }}>
+            Cast
+          </NavLink>
         </li>
         <li>
-          <NavLink to="reviews">Reviews</NavLink>
+          <NavLink to="reviews" state={{ from: goBackRef }}>
+            Reviews
+          </NavLink>
         </li>
       </ul>
       <Outlet />
