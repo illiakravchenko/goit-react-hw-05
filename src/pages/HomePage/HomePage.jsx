@@ -18,6 +18,7 @@ const HomePage = () => {
   console.log(movies);
   return (
     <div>
+      <h1>Trending Movies</h1>
       <MovieList movies={movies} />
     </div>
   );
